@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/Users/hannahrose/Documents/TimeKeeping/build/src",
+  "command": "/usr/bin/c++   -g -std=gnu++17 -arch arm64 -o CMakeFiles/Phaser.dir/Phaser.cpp.o -c /Users/hannahrose/Documents/TimeKeeping/src/Phaser.cpp",
+  "file": "/Users/hannahrose/Documents/TimeKeeping/src/Phaser.cpp",
+  "output": "src/CMakeFiles/Phaser.dir/Phaser.cpp.o"
+}
+]

@@ -1,0 +1,3 @@
+// Configuration options for timekeeping
+#define Timekeeping_VERSION_MAJOR @Timekeeping_VERSION_MAJOR@
+#define Timekeeping_VERSION_MINOR @Timekeeping_VERSION_MINOR@
