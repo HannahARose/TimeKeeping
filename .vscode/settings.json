@@ -39,6 +39,7 @@
         "string_view": "cpp",
         "tuple": "cpp",
         "typeinfo": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "vector": "cpp"
     }
 }

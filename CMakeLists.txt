@@ -5,7 +5,7 @@ project(Timekeeping VERSION 0.1)
 
 # Set the C++ standard
 add_library(timekeeping_compiler_flags INTERFACE)
-target_compile_features(timekeeping_compiler_flags INTERFACE cxx_std_17)
+target_compile_features(timekeeping_compiler_flags INTERFACE cxx_std_20)
 
 # Add a Configuration Header
 configure_file(TimekeepingConfig.h.in TimekeepingConfig.h)
