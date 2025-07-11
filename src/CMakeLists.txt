@@ -5,6 +5,10 @@ target_link_libraries(Phaser PRIVATE timekeeping_compiler_flags)
 install(TARGETS Phaser
     DESTINATION bin
 )
+
+link_directories("/opt/homebrew/lib")
+include_directories("/opt/homebrew/include")
+
 # Set the output directory for the executable
 # set_target_properties(Phaser PROPERTIES
 #     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin

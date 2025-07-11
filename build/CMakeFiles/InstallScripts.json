@@ -1,9 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"/Users/hannahrose/Documents/TimeKeeping/build/cmake_install.cmake",
-		"/Users/hannahrose/Documents/TimeKeeping/build/src/cmake_install.cmake",
-		"/Users/hannahrose/Documents/TimeKeeping/build/tests/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

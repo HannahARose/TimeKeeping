@@ -1,2 +1,0 @@
-/usr/local/include/TimekeepingConfig.h
-/usr/local/bin/Phaser
