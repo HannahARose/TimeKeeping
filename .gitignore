@@ -3,3 +3,14 @@
 /build
 /bin
 /obj
+
+# Ignore data files
+*.csv
+/data/*.txt
+
+# Ignore log files
+*.log
+
+# Ignore temporary files
+*.tmp
+.DS_Store
