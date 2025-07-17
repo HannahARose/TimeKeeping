@@ -7,10 +7,9 @@ target_link_libraries(Phaser PRIVATE timekeeping_compiler_flags)
 target_link_libraries(Phaser PRIVATE Boost::multiprecision)
 target_link_libraries(Phaser PRIVATE argparse)
 
+target_link_libraries(Timer PRIVATE timekeeping_compiler_flags)
 target_link_libraries(Timer PRIVATE Boost::multiprecision)
 target_link_libraries(Timer PRIVATE argparse)
-target_link_libraries(Timer PRIVATE timekeeping_compiler_flags)
-
 # Install the executables
 install(TARGETS Phaser 
     DESTINATION bin

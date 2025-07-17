@@ -196,6 +196,8 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    long long interval_n = 0;
+
     // Fields for input data
     int Year = 0;
     int Month = 0;
@@ -211,12 +213,16 @@ int main(int argc, char* argv[]) {
     quad H_Phase = 0;
     quad Z_Phase = 0;
 
-    // Fields for output data
     quad Si_Freq = 1;
     quad Rb_Freq = 1;
     quad H_Freq = 1;
     quad Z_Freq = 1;
 
+    // Fields for output data
+    quad Si_Mean_Freq = 1;
+    quad Rb_Mean_Freq = 1;
+    quad H_Mean_Freq = 1;
+    quad Z_Mean_Freq = 1;
     quad Si_Error_Freq = 0;
     quad Rb_Error_Freq = 0;
     quad H_Error_Freq = 0;
@@ -230,28 +236,28 @@ int main(int argc, char* argv[]) {
     // Read reference frequencies from command-line arguments
     if (!program.get<std::string>("--si_freq").empty()) {
         std::istringstream iss_si(program.get<std::string>("--si_freq"));
-        if (!(iss_si >> Si_Freq)) {
+        if (!(iss_si >> Si_Mean_Freq)) {
             std::cerr << "Error: Invalid Si Frequency value: " << program.get<std::string>("--si_freq") << std::endl;
             return 1;
         }
     }
     if (!program.get<std::string>("--rb_freq").empty()) {
         std::istringstream iss_rb(program.get<std::string>("--rb_freq"));
-        if (!(iss_rb >> Rb_Freq)) {
+        if (!(iss_rb >> Rb_Mean_Freq)) {
             std::cerr << "Error: Invalid Rb Frequency value: " << program.get<std::string>("--rb_freq") << std::endl;
             return 1;
         }
     }
     if (!program.get<std::string>("--h_freq").empty()) {
         std::istringstream iss_h(program.get<std::string>("--h_freq"));
-        if (!(iss_h >> H_Freq)) {
+        if (!(iss_h >> H_Mean_Freq)) {
             std::cerr << "Error: Invalid H Frequency value: " << program.get<std::string>("--h_freq") << std::endl;
             return 1;
         }
     }
     if (!program.get<std::string>("--z_freq").empty()) {
         std::istringstream iss_z(program.get<std::string>("--z_freq"));
-        if (!(iss_z >> Z_Freq)) {
+        if (!(iss_z >> Z_Mean_Freq)) {
             std::cerr << "Error: Invalid Z Frequency value: " << program.get<std::string>("--z_freq") << std::endl;
             return 1;
         }
@@ -318,10 +324,10 @@ int main(int argc, char* argv[]) {
             output_stream.precision(std::numeric_limits<quad>::digits10);
             output_stream << "#Time data computed from Phase data by Timer tool." << std::endl;
             output_stream << "#Input file: " << program.get<std::string>("in_file") << std::endl;
-            output_stream << "#Si Frequency: " << Si_Freq << " seconds" << std::endl;
-            output_stream << "#Rb Frequency: " << Rb_Freq << " seconds" << std::endl;
-            output_stream << "#H Frequency: " << H_Freq << " seconds" << std::endl;
-            output_stream << "#Z Frequency: " << Z_Freq << " seconds" << std::endl;
+            output_stream << "#Si Frequency: " << Si_Mean_Freq << " seconds" << std::endl;
+            output_stream << "#Rb Frequency: " << Rb_Mean_Freq << " seconds" << std::endl;
+            output_stream << "#H Frequency: " << H_Mean_Freq << " seconds" << std::endl;
+            output_stream << "#Z Frequency: " << Z_Mean_Freq << " seconds" << std::endl;
             output_stream << "#Reference time: " << reference_time << " seconds" << std::endl;
             if (program.get<bool>("--error")) {
                 output_stream << "#Interval: " << interval << " seconds" << std::endl;
@@ -353,19 +359,19 @@ int main(int argc, char* argv[]) {
         if (!program.get<bool>("--error")) {
 
             // Cumulative time calculation
-            Si_Time = Si_Phase / Si_Freq + reference_time;
-            Rb_Time = Rb_Phase / Rb_Freq + reference_time;
-            H_Time = H_Phase / H_Freq + reference_time;
-            Z_Time = Z_Phase / Z_Freq + reference_time;
+            Si_Time = Si_Phase / Si_Mean_Freq + reference_time;
+            Rb_Time = Rb_Phase / Rb_Mean_Freq + reference_time;
+            H_Time = H_Phase / H_Mean_Freq + reference_time;
+            Z_Time = Z_Phase / Z_Mean_Freq + reference_time;
 
         } else {
 
             // Time error calculation
-            reference_time += interval; // Adjust reference time by the interval
-            Si_Time = (Si_Phase - reference_time * Si_Freq) / Si_Error_Freq;
-            Rb_Time = (Rb_Phase - reference_time * Rb_Freq) / Rb_Error_Freq;
-            H_Time = (H_Phase - reference_time * H_Freq) / H_Error_Freq;
-            Z_Time = (Z_Phase - reference_time * Z_Freq) / Z_Error_Freq;
+            interval_n ++;
+            Si_Time = (Si_Phase - (interval_n * interval * Si_Mean_Freq)) / Si_Error_Freq;
+            Rb_Time = (Rb_Phase - interval_n * interval * Rb_Mean_Freq) / Rb_Error_Freq;
+            H_Time = (H_Phase - interval_n * interval * H_Mean_Freq) / H_Error_Freq;
+            Z_Time = (Z_Phase - interval_n * interval * Z_Mean_Freq) / Z_Error_Freq;
 
         }
 
