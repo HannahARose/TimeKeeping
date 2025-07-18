@@ -14,3 +14,4 @@
 # Ignore temporary files
 *.tmp
 .DS_Store
+.vscode/
