@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 4.0)
 
 # Timekeeping Version
-project(Timekeeping VERSION 0.1)
+project(Timekeeping VERSION 1.0.0)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -9,8 +9,16 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_library(timekeeping_compiler_flags INTERFACE)
 target_compile_features(timekeeping_compiler_flags INTERFACE cxx_std_23)
 
+# Get Git commit hash
+execute_process(COMMAND git rev-parse HEAD OUTPUT_VARIABLE GIT_COMMIT_HASH OUTPUT_STRIP_TRAILING_WHITESPACE)
+
+# Get Git branch name
+execute_process(COMMAND git rev-parse --abbrev-ref HEAD OUTPUT_VARIABLE GIT_BRANCH_NAME OUTPUT_STRIP_TRAILING_WHITESPACE)
+
 # Add a Configuration Header
-configure_file(TimekeepingConfig.h.in TimekeepingConfig.h)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/TimekeepingConfig.h.in ${CMAKE_CURRENT_BINARY_DIR}/TimekeepingConfig.h)
+# Add the generated header to include directories
+include_directories(${CMAKE_CURRENT_BINARY_DIR}) 
 install(FILES "${CMAKE_BINARY_DIR}/TimekeepingConfig.h"
     DESTINATION include
 )

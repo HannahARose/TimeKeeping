@@ -1,3 +1,13 @@
 // Configuration options for timekeeping
+#ifndef __TIMEKEEPINGCONFIG_H__
+#define __TIMEKEEPINGCONFIG_H__
+
+// clang-format off
 #define Timekeeping_VERSION_MAJOR @Timekeeping_VERSION_MAJOR@
 #define Timekeeping_VERSION_MINOR @Timekeeping_VERSION_MINOR@
+#define Timekeeping_VERSION_PATCH @Timekeeping_VERSION_PATCH@
+#define GIT_BRANCH_NAME           "@GIT_BRANCH_NAME@"
+#define GIT_COMMIT_HASH           "@GIT_COMMIT_HASH@"
+// clang-format on
+
+#endif  // __TIMEKEEPINGCONFIG_H__
