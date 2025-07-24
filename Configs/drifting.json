@@ -1,0 +1,17 @@
+{
+    "Epoch_Time": "2025-07-11T13:27:48",
+    "Start_Time": "2025-07-11T13:27:48",
+    "End_Time": "2025-07-21T07:00:00",
+    "Time_Step": "0.1",
+    "Output_File": "./data/SrTime/drifting.csv",
+    "Si3_Data_Path": "./data/Si3",
+    "Si3_Maser_Data_Path": "./data/PhaseFreq_B_4",
+    "Si3_Data_Template": "Si3_[0-9]{2}.csv",
+    "Si3_Maser_Data_Template": "PhaseFreq_B_4_[0-9]{6}_[0-9].txt",
+    "Si3_Major_Offset": "194.397648670701e12",
+    "Si3_Minor_Offset": "77.7588759615e6",
+    "Si3_Division": 777577,
+    "Maser_Nominal_Frequency": "251e6",
+    "Maser_Starting_Fractional_Offset": "-8.238383023387408e-12",
+    "Maser_Fractional_Drift_Rate": "-2.333e-20"
+}

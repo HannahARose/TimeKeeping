@@ -5,8 +5,8 @@
 /obj
 
 # Ignore data files
+/data
 *.csv
-/data/*.txt
 
 # Ignore log files
 *.log
@@ -15,3 +15,7 @@
 *.tmp
 .DS_Store
 .vscode/
+.cache/
+
+# Ignore documentation files
+/doxy

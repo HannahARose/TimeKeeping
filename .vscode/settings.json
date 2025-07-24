@@ -40,6 +40,13 @@
         "tuple": "cpp",
         "typeinfo": "cpp",
         "algorithm": "cpp",
-        "vector": "cpp"
-    }
+        "vector": "cpp",
+        "__split_buffer": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "filesystem": "cpp",
+        "format": "cpp"
+    },
+    "doxygen_runner.configuration_file_override": "${workspaceFolder}/Doxyfile",
+    "editor.formatOnSave": true
 }

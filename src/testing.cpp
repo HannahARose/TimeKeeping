@@ -1,64 +1,54 @@
+#include "CsvFileUtils/CsvGroup.hpp"
+
+#include <ctime>
 #include <iostream>
-#include <ranges>
-#include "Utils/FileAccess.hpp"
+#include <time.h>
 
+int main(int argc, char *argv[]) {
+  // CsvGroupMetadata metadata(
+  //     "./data/PhaseFreq_B_4/", "PhaseFreq_B_4_[0-9]{6}_[0-9].txt", {}, "",
+  //     "#", " ", true, false,
+  //     {"Day", "Time", "S", "Si_Phase", "Rb_Phase", "H_Phase", "Z_Phase",
+  //      "Si_Freq", "Rb_Freq", "H_Freq", "Z_Freq"},
+  //     -1);
 
-void printFileData(const CsvDataFileTimeGroup &csvFile) {
-    for (const auto& colName : csvFile.col_names) {
-        std::cout << colName << " ";
-    }
-    std::cout << std::endl;
-    std::cout << csvFile.files.size() << " Files Found:" << std::endl;
-    for (int i = 0; i < csvFile.files.size(); i++) {
-        const auto& file = csvFile.files[i];
-        std::cout << file.filePath << " with " << file.lineMap.size() << " lines, starting at " << csvFile.starting_line_numbers[i] << std::endl;
-    }
-    std::cout << "Total lines across all files: " << csvFile.starting_line_numbers.back() + csvFile.files.back().lineMap.size() << std::endl;
-}
+  // CsvGroupMetadata metadata("./data/Si3/", "Si3_[0-9]{2}.csv", {}, "", "#",
+  // ",",
+  //                           false, true, {"Time", "Si_Freq"}, -1);
 
-int main(int argc, char* argv[]) {
-    if (argc < 3) {
-        std::cerr << "Usage: " << argv[0] << " <csv_file_path> <file_template>" << std::endl;
-        return 1;
-    }
+  CsvGroupMetadata metadata(
+      "./data/Freq_B_3", "Freq_B_3_[0-9]{6}_[0-9].txt", {}, "", "#", " ", true,
+      false, {"Day", "Time", "S", "Si_Freq", "Rb_Freq", "H_Freq", "Z_Freq"},
+      -1);
 
-    CsvDataFileTimeGroup csvFile(argv[1], argv[2], " ", true, false, "#", false, 
-        {"Day", "Time", "S", "Si_Phase", "Rb_Phase", "H_Phase", "Z_Phase", "Si_Freq", "Rb_Freq", "H_Freq", "Z_Freq"});
+  std::cout << "Created a metadata object:\n";
+  std::cout << metadata << std::endl;
 
-    printFileData(csvFile);
+  time_t start = time(NULL);
+  std::cout << "Attempting to read the csv file using the metadata starting at "
+            << ctime(&start) << "..." << std::endl;
+  CsvGroup csvGroup(metadata, true); // true to ignore cache
+  time_t end = time(NULL);
+  std::cout << "CSV group read successfully in " << difftime(end, start)
+            << " seconds.\n";
 
-    while (true) {
-        std::cout << "Enter row number to read (or -1 to exit, -2 to update): ";
-        int row;
-        std::cin >> row;
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); // Clear the input buffer
+  std::cout << "CSV group contents:\n";
+  std::cout << csvGroup << std::endl;
 
-        if (row == -1) {
-            break;
-        }
+  std::cout << "Line 25 of the CSV file:\n";
+  std::cout << csvGroup.getRawLine(25) << std::endl;
 
-        if (row == -2) {
-            bool updated = csvFile.update();
+  std::cout << "Now attempting to read the group, using the new cache we just "
+               "created...\n";
+  start = time(NULL);
+  CsvGroup csvGroupWithCache(metadata);
+  end = time(NULL);
+  std::cout << "CSV file updated successfully in " << difftime(end, start)
+            << " seconds.\n";
 
-            if (updated) {
-                std::cout << "File list updated." << std::endl;
-                printFileData(csvFile);
-            } else {
-                std::cout << "No changes detected." << std::endl;
-            }
-
-            continue;
-        }
-
-        try {
-            auto rowData = csvFile.readRow(row);
-            for (const auto& [colName, value] : rowData) {
-                std::cout << colName << ": " << value << std::endl;
-            }
-        } catch (const std::exception& e) {
-            std::cerr << "Error reading row: " << e.what() << std::endl;
-        }
-    }
-
-    return 0;
+  std::cout << "CSV group contents after update:\n";
+  std::cout << csvGroupWithCache << std::endl;
+  std::cout << "Line 2005 of the updated CSV file:\n";
+  std::cout << csvGroupWithCache.getRawLine(25) << std::endl;
+  return 0;
 }
